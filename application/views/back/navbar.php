@@ -14,21 +14,27 @@
         </li>
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="<?php echo base_url()?>assets/images/user/<?php echo $this->session->userdata('photo').$this->session->userdata('photo_type') ?>" width="160px" height="160px" class="user-image" alt="User Image"/>
+            <img
+              src="<?php echo base_url() ?>assets/images/user/<?php echo $this->session->userdata('photo') . $this->session->userdata('photo_type') ?>"
+              width="160px" height="160px" class="user-image" alt="User Image" />
             <span class="hidden-xs">
               Halo, <?php echo $this->session->userdata('name') ?>
             </span>
           </a>
           <ul class="dropdown-menu">
             <li class="user-header">
-              <img src="<?php echo base_url()?>assets/images/user/<?php echo $this->session->userdata('photo').$this->session->userdata('photo_type') ?>" class="img-circle" alt="User Image" />
+              <img
+                src="<?php echo base_url() ?>assets/images/user/<?php echo $this->session->userdata('photo') . $this->session->userdata('photo_type') ?>"
+                class="img-circle" alt="User Image" />
               <p>
-              <?php echo $this->session->userdata('identity') ?>
+                <?php echo $this->session->userdata('identity') ?>
               </p>
             </li>
             <li class="user-body">
               <div class="col-xs-6 text-center">
-                <a href='<?php $user_id = $this->session->userdata('user_id'); echo base_url('admin/auth/edit_user/'.$user_id.'') ?>' class='btn btn-default btn-flat'>Edit Profil</a>
+                <a href='<?php $user_id = $this->session->userdata('user_id');
+                echo base_url('admin/auth/edit_user/' . $user_id . '') ?>' class='btn btn-default btn-flat'>Edit
+                  Profil</a>
               </div>
               <div class="col-xs-6 text-center">
                 <a href='<?php echo base_url() ?>admin/auth/logout' class='btn btn-default btn-flat'>Logout</a>

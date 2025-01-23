@@ -7,19 +7,19 @@
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="<?php echo base_url() ?>"><i class="fa fa-home"></i> Home</a></li>
-					<li class="breadcrumb-item active">Detail Booking</li>
+					<li class="breadcrumb-item active">Booking Detail</li>
 				</ol>
 			</nav>
 		</div>
 
 		<div class="col-lg-12">
-			<h1>DETAIL BOOKING</h1>
+			<h1>Detail Pesanan</h1>
 			<hr>
 			<form action="<?php echo base_url('cart/checkout') ?>" method="post">
 				<div class="row">
 					<div class="col-lg-12"><?php if ($this->session->flashdata('message')) {
-																		echo $this->session->flashdata('message');
-																	} ?>
+						echo $this->session->flashdata('message');
+					} ?>
 						<div class="box-body table-responsive padding">
 							<table id="datatable" class="table table-striped table-bordered">
 								<thead>
@@ -50,7 +50,8 @@
 											<td style="text-align:center">
 												<?php echo form_dropdown('', array('' => '- Pilih Tanggal Dulu -'), '', $jam_mulai); ?>
 												<span class="loading_container" style="display:none;">
-													<img src="<?php echo base_url(); ?>assets/template/frontend/img/loading.gif" style="display:inline;" />&nbsp;memuat data ...</span>
+													<img src="<?php echo base_url(); ?>assets/template/frontend/img/loading.gif"
+														style="display:inline;" />&nbsp;memuat data ...</span>
 											</td>
 											<td style="text-align:center">
 												<input type="number" name="durasi[]" class="durasi" min="1">
@@ -58,7 +59,8 @@
 											<td style="text-align:center" class="jam_selesai"></td>
 											<td style="text-align:center" class="subtotal"></td>
 											<td style="text-align:center">
-												<a href="<?php echo base_url('cart/delete/') . $cart->id_transdet ?>" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i></a>
+												<a href="<?php echo base_url('cart/delete/') . $cart->id_transdet ?>"
+													class="btn btn-sm btn-danger"><i class="fa fa-remove"></i></a>
 											</td>
 										</tr>
 									<?php } ?>
@@ -105,7 +107,8 @@
 						<div class="col-lg-12">
 							<?php if (!empty($cek_keranjang->lapangan_id)) { ?>
 								<a href="<?php echo base_url('cart/empty_cart/') . $customer_data->id_trans ?>">
-									<button name="hapus" type="button" class="btn btn-danger" aria-label="Left Align" title="Kosongkan Keranjang" OnClick="return confirm('Apakah Anda yakin?');">
+									<button name="hapus" type="button" class="btn btn-danger" aria-label="Left Align"
+										title="Kosongkan Keranjang" OnClick="return confirm('Apakah Anda yakin?');">
 										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Kosongkan
 									</button>
 								</a>
@@ -137,8 +140,8 @@
 				return parts.join(".");
 			}
 
-			$(function() {
-				$(document).on("focus", ".tanggal", function() {
+			$(function () {
+				$(document).on("focus", ".tanggal", function () {
 					$(this).datepicker({
 						startDate: '0',
 						autoclose: true,
@@ -147,7 +150,7 @@
 					});
 				});
 
-				$('.tanggal').on('changeDate', function(ev) {
+				$('.tanggal').on('changeDate', function (ev) {
 					tanggal_el = $(this);
 					tanggal_val = $(this).val();
 					jam_mulai_el = tanggal_el.parent().parent().find(".jam_mulai");
@@ -160,43 +163,43 @@
 					loading_container_el.show();
 
 					$.post('<?php echo base_url(); ?>Cart/getJamMulai', {
-							tanggal: tanggal_val,
-							lapangan_id: lapangan_id_el.val()
-						}, function(data) {
-							jam_mulai_el.show();
-							loading_container_el.hide();
+						tanggal: tanggal_val,
+						lapangan_id: lapangan_id_el.val()
+					}, function (data) {
+						jam_mulai_el.show();
+						loading_container_el.hide();
+						jam_mulai_el.html("");
+
+						jam_mulai_el.append("<option value='' selected='selected'>- Pilih Jam Mulai -</option>");
+
+						count = 0;
+
+						data.forEach(function (item, index) {
+							// console.log(item);
+							jam_mulai_el.append("<option durasi='" + item.durasi + "'>" + item.jam_mulai + "</option>");
+							count++;
+						});
+
+						durasi_el.val(0);
+						jam_selesai_el.html("");
+
+						if (count == 0) {
 							jam_mulai_el.html("");
+							jam_mulai_el.append("<option value='' selected='selected'>- Tidak ada pilihan -</option>");
+						}
 
-							jam_mulai_el.append("<option value='' selected='selected'>- Pilih Jam Mulai -</option>");
-
-							count = 0;
-
-							data.forEach(function(item, index) {
-								// console.log(item);
-								jam_mulai_el.append("<option durasi='" + item.durasi + "'>" + item.jam_mulai + "</option>");
-								count++;
-							});
-
-							durasi_el.val(0);
-							jam_selesai_el.html("");
-
-							if (count == 0) {
-								jam_mulai_el.html("");
-								jam_mulai_el.append("<option value='' selected='selected'>- Tidak ada pilihan -</option>");
-							}
-
-						},
+					},
 						'json'
 					);
 				});
 
-				$(document).on("change", ".jam_mulai", function() {
+				$(document).on("change", ".jam_mulai", function () {
 					jam_mulai_el = $(this);
 					durasi_el = jam_mulai_el.parent().parent().find(".durasi");
 					durasi_el.val(jam_mulai_el.find(":selected").attr("durasi")).change();
 				});
 
-				$(document).on("change keyup", ".durasi", function() {
+				$(document).on("change keyup", ".durasi", function () {
 					durasi_el = $(this);
 					durasi = $(this).val();
 
@@ -221,7 +224,7 @@
 						subtotal_el.html(numberWithCommas(harga_per_jam_int * parseInt(durasi)));
 
 						subtotal_bawah = 0;
-						$('.subtotal').each(function(i, obj) {
+						$('.subtotal').each(function (i, obj) {
 							a_subtotal_html = $(this).html().trim().replace(/,/g, '');
 							if (a_subtotal_html == "") {
 								a_subtotal_html = "0";
